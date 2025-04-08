@@ -1,10 +1,10 @@
-package com.roomit.roomit;
+package com.roomit.demo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RoomitApplicationTests {
+class DemoApplicationTests {
 
 	@Test
 	void contextLoads() {
