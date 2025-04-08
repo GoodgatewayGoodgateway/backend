@@ -1,13 +1,27 @@
 package com.roomit.demo.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.roomit.demo.dto.AddUserRequest;
+import com.roomit.demo.dto.LoginRequest;
+import com.roomit.demo.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
+@RequestMapping("/api")
+@RequiredArgsConstructor
 public class UserApiController {
 
-    @GetMapping("/")
-    public String index() {
-        return "index";
+    private final UserService userService;
+
+    @PostMapping("/user")
+    public String register(@RequestBody AddUserRequest request) {
+        userService.register(request);
+        return "회원가입 완료!";
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody LoginRequest request) {
+        userService.login(request);
+        return "로그인 성공!";
     }
 }
