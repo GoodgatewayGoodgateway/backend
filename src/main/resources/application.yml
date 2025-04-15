@@ -1,9 +1,6 @@
-# src/main/resources/application.yml
 spring:
-  application:
-    name: roomit
   datasource:
-    url: jdbc:mysql://localhost:3330/capstone
+    url: jdbc:mysql://localhost:3331/capstone
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -11,10 +8,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
     properties:
       hibernate:
-        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
 
+#server:
+#  port: 8081
 server:
-  port: 8081
+  port: ${PORT:8080}
