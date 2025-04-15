@@ -4,7 +4,7 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class AddInterestsRequest {
+public class AddSelectedOptionsRequest {
     private String userId;
-    private List<String> interests;
+    private List<Long> selectedOptionIds;
 }
