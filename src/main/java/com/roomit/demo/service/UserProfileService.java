@@ -7,9 +7,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class UserProfileService {
+
     private final UserRepository userRepository;
     private final UserProfileRepository userProfileRepository;
     private final UserInterestRepository userInterestRepository;
@@ -21,23 +24,28 @@ public class UserProfileService {
         User user = userRepository.findByUserId(request.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("사용자 없음"));
 
-        UserProfile profile = UserProfile.builder()
-                .user(user)
-                .age(request.getAge())
-                .gender(request.getGender())
-                .location(request.getLocation())
-                .job(request.getJob())
-                .introduction(request.getIntroduction())
-                .idealRoommate(request.getIdealRoommate())
-                .mbti(request.getMbti())
-                .wakeUpTime(request.getWakeUpTime())
-                .sleepTime(request.getSleepTime())
-                .dayNightType(request.getDayNightType())
-                .cleanLevel(request.getCleanLevel())
-                .noise(request.getNoise())
-                .smoking(request.getSmoking())
-                .drinking(request.getDrinking())
-                .build();
+        // 기존 프로필이 존재하면 가져오고, 없으면 새로 생성
+        UserProfile profile = userProfileRepository.findByUser(user)
+                .orElse(UserProfile.builder()
+                        .user(user)
+                        .createdAt(LocalDateTime.now())
+                        .build());
+
+        // 필드 업데이트
+        profile.setAge(request.getAge());
+        profile.setGender(request.getGender());
+        profile.setLocation(request.getLocation());
+        profile.setJob(request.getJob());
+        profile.setIntroduction(request.getIntroduction());
+        profile.setIdealRoommate(request.getIdealRoommate());
+        profile.setMbti(request.getMbti());
+        profile.setWakeUpTime(request.getWakeUpTime());
+        profile.setSleepTime(request.getSleepTime());
+        profile.setDayNightType(request.getDayNightType());
+        profile.setCleanLevel(request.getCleanLevel());
+        profile.setNoise(request.getNoise());
+        profile.setSmoking(request.getSmoking());
+        profile.setDrinking(request.getDrinking());
 
         userProfileRepository.save(profile);
     }

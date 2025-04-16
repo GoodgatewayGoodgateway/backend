@@ -1,6 +1,7 @@
 package com.roomit.demo.dto;
 
 import lombok.Getter;
+import java.time.LocalTime;
 
 @Getter
 public class AddUserProfileRequest {
@@ -12,8 +13,8 @@ public class AddUserProfileRequest {
     private String introduction;
     private String idealRoommate;
     private String mbti;
-    private String wakeUpTime;
-    private String sleepTime;
+    private LocalTime wakeUpTime;  // ← 여기!
+    private LocalTime sleepTime;   // ← 여기!
     private String dayNightType;
     private String cleanLevel;
     private String noise;

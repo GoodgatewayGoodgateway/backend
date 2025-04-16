@@ -2,7 +2,9 @@ package com.roomit.demo.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "user_profiles")
@@ -28,8 +30,10 @@ public class UserProfile {
     private String introduction;
     private String idealRoommate;
     private String mbti;
-    private String wakeUpTime;
-    private String sleepTime;
+
+    private LocalTime wakeUpTime;
+    private LocalTime sleepTime;
+
     private String dayNightType;
     private String cleanLevel;
     private String noise;

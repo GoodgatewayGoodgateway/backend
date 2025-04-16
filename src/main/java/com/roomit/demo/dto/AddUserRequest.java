@@ -1,10 +1,10 @@
 package com.roomit.demo.dto;
 
 import lombok.Getter;
-import java.util.List;
 
 @Getter
-public class AddInterestsRequest {
+public class AddUserRequest {
     private String userId;
-    private List<String> interests;
+    private String email;
+    private String password;
 }
