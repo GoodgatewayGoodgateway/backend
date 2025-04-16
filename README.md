@@ -72,3 +72,127 @@
 - `users` 1 : N `user_interests`
 - `users` 1 : 1 `user_lifestyle`
 - `users` 1 : 1 `user_preferences`
+
+
+
+
+# 📡 Roomit API 목록 (2025-04-16 기준)
+---
+
+## ✅ 회원가입
+
+- **URL**: `POST /api/user`
+- **Body (JSON)**:
+```json
+{
+  "userId": "alvin42",
+  "email": "alvin@example.com",
+  "password": "1234"
+}
+```
+
+---
+
+## ✅ 로그인
+
+- **URL**: `POST /api/login`
+- **Body (JSON)**:
+```json
+{
+  "userId": "alvin42",
+  "password": "1234"
+}
+```
+- **성공 시**: 유저 정보 반환  
+- **실패 시**: `500 Internal Server Error` + `"존재하지 않는 사용자입니다."`
+
+---
+
+## ✅ 프로필 등록 / 수정
+
+- **URL**: `POST /api/profile`
+- **Body (JSON)**:
+```json
+{
+  "userId": "alvin42",
+  "age": 22,
+  "gender": "남자",
+  "location": "서울",
+  "job": "백엔드 개발자",
+  "introduction": "같이 잘 지낼 사람 찾습니다.",
+  "idealRoommate": "조용하고 정리 잘하는 사람",
+  "mbti": "INTJ",
+  "wakeUpTime": "07:30",
+  "sleepTime": "23:30",
+  "dayNightType": "아침형",
+  "cleanLevel": "높음",
+  "noise": "낮음",
+  "smoking": "비흡연",
+  "drinking": "가끔"
+}
+```
+
+---
+
+## ✅ 관심사 추가
+
+- **URL**: `POST /api/interests`
+- **Body (JSON)**:
+```json
+{
+  "userId": "alvin42",
+  "interests": ["요리", "보드게임", "러닝"]
+}
+```
+
+---
+
+## ✅ 선택 옵션 추가
+
+- **URL**: `POST /api/selected-options`
+- **Body (JSON)**:
+```json
+{
+  "userId": "alvin42",
+  "selectedOptionIds": [1, 3, 5]
+}
+```
+- ⚠️ 현재 DB에 해당 ID의 옵션값이 없으면 **500 에러 발생**
+
+---
+
+## ✅ 전체 유저 정보 조회
+
+- **URL**: `GET /api/user/{userId}/full`  
+- **예시**: `GET /api/user/alvin42/full`
+
+- **응답 예시**:
+```json
+{
+  "userId": "alvin42",
+  "email": "alvin@example.com",
+  "profile": {
+    "age": 22,
+    "gender": "남자",
+    "location": "서울",
+    "job": "백엔드 개발자",
+    "introduction": "같이 잘 지낼 사람 찾습니다.",
+    "idealRoommate": "조용하고 정리 잘하는 사람",
+    "mbti": "INTJ",
+    "wakeUpTime": "07:30",
+    "sleepTime": "23:30",
+    "dayNightType": "아침형",
+    "cleanLevel": "높음",
+    "noise": "낮음",
+    "smoking": "비흡연",
+    "drinking": "가끔"
+  },
+  "interests": [
+    "요리", "보드게임", "러닝",
+    "요리", "보드게임", "러닝",
+    "요리", "보드게임", "러닝",
+    "요리", "보드게임", "러닝"
+  ],
+  "selectedOptions": []
+}
+```
