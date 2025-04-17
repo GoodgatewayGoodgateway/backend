@@ -40,6 +40,9 @@ public class UserProfile {
     private String smoking;
     private String drinking;
 
+    @Column(length = 255)
+    private String avatar;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 }

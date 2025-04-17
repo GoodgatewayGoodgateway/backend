@@ -35,5 +35,6 @@ public class UserFullInfoResponse {
         private String noise;
         private String smoking;
         private String drinking;
+        private String avatar;
     }
 }

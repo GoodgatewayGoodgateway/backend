@@ -46,6 +46,7 @@ public class UserProfileService {
         profile.setNoise(request.getNoise());
         profile.setSmoking(request.getSmoking());
         profile.setDrinking(request.getDrinking());
+        profile.setAvatar(request.getAvatar());
 
         userProfileRepository.save(profile);
     }
