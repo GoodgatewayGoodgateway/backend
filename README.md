@@ -114,6 +114,7 @@
 ```json
 {
   "userId": "alvin42",
+  "name": "채환",
   "age": 22,
   "gender": "남자",
   "location": "서울",
@@ -172,6 +173,7 @@
   "userId": "alvin42",
   "email": "alvin@example.com",
   "profile": {
+    "name": "채환",
     "age": 22,
     "gender": "남자",
     "location": "서울",
