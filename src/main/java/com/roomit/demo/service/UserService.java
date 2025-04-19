@@ -20,11 +20,20 @@ public class UserService {
 
     @Transactional
     public void register(AddUserRequest request) {
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
+        }
+
+        if (userRepository.findByUserId(request.getUserId()).isPresent()) {
+            throw new IllegalArgumentException("이미 사용 중인 닉네임입니다.");
+        }
+
         User user = User.builder()
                 .userId(request.getUserId())
                 .email(request.getEmail())
                 .password(request.getPassword())
                 .build();
+
         userRepository.save(user);
     }
 
@@ -40,6 +49,18 @@ public class UserService {
         User user = userRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
 
+        return buildFullInfo(user);
+    }
+
+    @Transactional(readOnly = true)
+    public List<UserFullInfoResponse> getAllUserInfoList() {
+        List<User> users = userRepository.findAll();
+        return users.stream()
+                .map(this::buildFullInfo)
+                .toList();
+    }
+
+    private UserFullInfoResponse buildFullInfo(User user) {
         UserProfile profile = userProfileRepository.findByUser(user).orElse(null);
         List<UserInterest> interests = profile == null ? List.of() : userInterestRepository.findByProfile(profile);
         List<UserSelectedOption> selectedOptions = profile == null ? List.of() : userSelectedOptionRepository.findByProfile(profile);
@@ -49,6 +70,7 @@ public class UserService {
                 .email(user.getEmail())
                 .profile(profile == null ? null :
                         UserFullInfoResponse.UserProfileInfo.builder()
+                                .name(nullToInfo(profile.getName()))
                                 .age(profile.getAge())
                                 .gender(nullToInfo(profile.getGender()))
                                 .location(nullToInfo(profile.getLocation()))
@@ -63,6 +85,7 @@ public class UserService {
                                 .noise(nullToInfo(profile.getNoise()))
                                 .smoking(nullToInfo(profile.getSmoking()))
                                 .drinking(nullToInfo(profile.getDrinking()))
+                                .avatar(nullToInfo(profile.getAvatar()))
                                 .build())
                 .interests(interests.stream()
                         .map(i -> nullToInfo(i.getName()))

@@ -22,6 +22,7 @@ public class UserProfile {
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+    private String name;
 
     private Integer age;
     private String gender;

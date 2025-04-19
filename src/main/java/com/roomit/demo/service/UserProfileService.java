@@ -24,14 +24,13 @@ public class UserProfileService {
         User user = userRepository.findByUserId(request.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("사용자 없음"));
 
-        // 기존 프로필이 존재하면 가져오고, 없으면 새로 생성
         UserProfile profile = userProfileRepository.findByUser(user)
                 .orElse(UserProfile.builder()
                         .user(user)
                         .createdAt(LocalDateTime.now())
                         .build());
 
-        // 필드 업데이트
+        profile.setName(request.getName());
         profile.setAge(request.getAge());
         profile.setGender(request.getGender());
         profile.setLocation(request.getLocation());

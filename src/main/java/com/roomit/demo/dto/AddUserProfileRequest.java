@@ -7,6 +7,7 @@ import java.time.LocalTime;
 @Getter
 public class AddUserProfileRequest {
     private String userId;
+    private String name;
     private Integer age;
     private String gender;
     private String location;
