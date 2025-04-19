@@ -77,6 +77,7 @@
 
 
 # 📡 Roomit API 목록 (2025-04-16 기준)
+
 ---
 
 ## ✅ 회원가입
@@ -103,8 +104,6 @@
   "password": "1234"
 }
 ```
-- **성공 시**: 유저 정보 반환  
-- **실패 시**: `500 Internal Server Error` + `"존재하지 않는 사용자입니다."`
 
 ---
 
@@ -128,9 +127,11 @@
   "cleanLevel": "높음",
   "noise": "낮음",
   "smoking": "비흡연",
-  "drinking": "가끔"
+  "drinking": "가끔",
+  "avatar": "https://example.com/profile/alvin42.png"
 }
 ```
+- **설명**: `avatar`는 프로필 사진 URL입니다. 빈 값이면 "정보없음"으로 저장됨.
 
 ---
 
@@ -157,7 +158,6 @@
   "selectedOptionIds": [1, 3, 5]
 }
 ```
-- ⚠️ 현재 DB에 해당 ID의 옵션값이 없으므로 **500 에러 발생**
 
 ---
 
@@ -185,14 +185,10 @@
     "cleanLevel": "높음",
     "noise": "낮음",
     "smoking": "비흡연",
-    "drinking": "가끔"
+    "drinking": "가끔",
+    "avatar": "https://example.com/profile/alvin42.png"
   },
-  "interests": [
-    "요리", "보드게임", "러닝",
-    "요리", "보드게임", "러닝",
-    "요리", "보드게임", "러닝",
-    "요리", "보드게임", "러닝"
-  ],
+  "interests": ["요리", "보드게임", "러닝"],
   "selectedOptions": []
 }
 ```
