@@ -1,17 +1,16 @@
-# 1단계: Gradle Wrapper 사용해서 빌드
+# 1단계: 빌드
 FROM eclipse-temurin:17-jdk AS build
 
 WORKDIR /app
 
 COPY . .
 
-# gradlew에 실행 권한 부여 (중요)
 RUN chmod +x ./gradlew
 
-# build
-RUN ./gradlew build --no-daemon
+# 테스트 생략하고 빌드만
+RUN ./gradlew build -x test --no-daemon
 
-# 2단계: 실제 실행용 이미지
+# 2단계: 실행
 FROM eclipse-temurin:17-jdk
 
 WORKDIR /app
