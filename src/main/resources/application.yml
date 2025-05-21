@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:mysql://localhost:3330/capstone?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: root  # ← 네 워크벤치 접속 아이디
-    password: 1234  # ← 네 비밀번호로 바꿔
+    username: root
+    password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -14,4 +14,28 @@ spring:
         format_sql: true
 
 server:
-  port: 8081  # 포트 충돌 방지
+  port: 8081
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    display-request-duration: true
+    tags-sorter: alpha
+    operations-sorter: alpha
+    doc-expansion: none
+    defaultModelsExpandDepth: -1
+
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+
+  info:
+    title: RooMIT API 문서
+    description: |
+      룸메이트 매칭을 위한 백엔드 API 명세서입니다.  
+      사용자 등록, 로그인, 프로필 저장, 관심사/선택옵션 저장까지 전부 포함돼 있습니다.
+    version: 1.0.0
+    contact:
+      name: RooMIT 개발팀
+      email: roomit.team@example.com

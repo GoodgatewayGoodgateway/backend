@@ -87,12 +87,8 @@ public class UserService {
                                 .drinking(nullToInfo(profile.getDrinking()))
                                 .avatar(nullToInfo(profile.getAvatar()))
                                 .build())
-                .interests(interests.stream()
-                        .map(i -> nullToInfo(i.getName()))
-                        .toList())
-                .selectedOptions(selectedOptions.stream()
-                        .map(s -> nullToInfo(s.getOptionValue().getLabel()))
-                        .toList())
+                .interests(interests.stream().map(i -> nullToInfo(i.getName())).toList())
+                .selectedOptions(selectedOptions.stream().map(s -> nullToInfo(s.getOptionValue().getLabel())).toList())
                 .build();
     }
 
