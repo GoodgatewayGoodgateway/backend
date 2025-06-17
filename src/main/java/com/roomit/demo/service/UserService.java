@@ -3,6 +3,7 @@ package com.roomit.demo.service;
 import com.roomit.demo.domain.*;
 import com.roomit.demo.dto.*;
 import com.roomit.demo.repository.*;
+import com.roomit.demo.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ public class UserService {
     private final UserProfileRepository userProfileRepository;
     private final UserInterestRepository userInterestRepository;
     private final UserSelectedOptionRepository userSelectedOptionRepository;
+    private final JwtUtil jwtUtil;
 
     @Transactional
     public void register(AddUserRequest request) {
@@ -38,24 +40,26 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public User login(LoginRequest request) {
-        return userRepository.findByUserId(request.getUserId())
-                .filter(user -> user.getPassword().equals(request.getPassword()))
+    public LoginResponse login(LoginRequest request) {
+        User user = userRepository.findByUserId(request.getUserId())
+                .filter(u -> u.getPassword().equals(request.getPassword()))
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+
+        String token = jwtUtil.createToken(user.getUserId());
+        return new LoginResponse(token);
     }
+
 
     @Transactional(readOnly = true)
     public UserFullInfoResponse getFullUserInfo(String userId) {
         User user = userRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
-
         return buildFullInfo(user);
     }
 
     @Transactional(readOnly = true)
     public List<UserFullInfoResponse> getAllUserInfoList() {
-        List<User> users = userRepository.findAll();
-        return users.stream()
+        return userRepository.findAll().stream()
                 .map(this::buildFullInfo)
                 .toList();
     }
