@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Service
 @RequiredArgsConstructor
@@ -38,8 +39,8 @@ public class UserProfileService {
         profile.setIntroduction(request.getIntroduction());
         profile.setIdealRoommate(request.getIdealRoommate());
         profile.setMbti(request.getMbti());
-        profile.setWakeUpTime(request.getWakeUpTime());
-        profile.setSleepTime(request.getSleepTime());
+        profile.setWakeUpTime(LocalTime.parse(request.getWakeUpTime())); // ⚠️ String → LocalTime
+        profile.setSleepTime(LocalTime.parse(request.getSleepTime()));   // ⚠️ String → LocalTime
         profile.setDayNightType(request.getDayNightType());
         profile.setCleanLevel(request.getCleanLevel());
         profile.setNoise(request.getNoise());
@@ -75,7 +76,7 @@ public class UserProfileService {
         UserProfile profile = user.getProfile();
         if (profile == null) throw new IllegalStateException("프로필 먼저 등록 필요");
 
-        request.getSelectedOptionIds().forEach(optionId -> {
+        request.getOptionValueIds().forEach(optionId -> {
             OptionValue option = optionValueRepository.findById(optionId)
                     .orElseThrow(() -> new IllegalArgumentException("옵션 없음"));
             UserSelectedOption selected = UserSelectedOption.builder()
