@@ -46,9 +46,8 @@ public class UserService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
 
         String token = jwtUtil.createToken(user.getUserId());
-        return new LoginResponse(token);
+        return new LoginResponse(token, user.getUserId(), user.getEmail());
     }
-
 
     @Transactional(readOnly = true)
     public UserFullInfoResponse getFullUserInfo(String userId) {
