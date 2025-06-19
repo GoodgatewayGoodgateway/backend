@@ -1,5 +1,6 @@
 package com.roomit.demo.domain.chat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.roomit.demo.domain.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -15,9 +16,12 @@ public class ChatRoomMember {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "chat_room_id")
+    @JsonBackReference
     private ChatRoom chatRoom;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     public ChatRoomMember(ChatRoom chatRoom, User user) {

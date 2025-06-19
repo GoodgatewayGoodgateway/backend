@@ -1,5 +1,7 @@
 package com.roomit.demo.domain.chat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.roomit.demo.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,10 +22,12 @@ public class ChatMessage {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "room_id", nullable = false)
     private ChatRoom chatRoom;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "sender_id", nullable = false)
     private User sender;
 

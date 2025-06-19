@@ -8,7 +8,6 @@ import com.roomit.demo.repository.chat.ChatMessageRepository;
 import com.roomit.demo.repository.chat.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,12 +20,12 @@ public class ChatMessageService {
     private final ChatRoomRepository chatRoomRepository;
     private final UserRepository userRepository;
 
-    @Transactional
-    public ChatMessage sendMessage(Long roomId, String senderUserId, String content) {
+    public ChatMessage sendMessage(Long roomId, String senderId, String content) {
         ChatRoom chatRoom = chatRoomRepository.findById(roomId)
-                .orElseThrow(() -> new IllegalArgumentException("채팅방이 존재하지 않습니다."));
-        User sender = userRepository.findByUserId(senderUserId)
-                .orElseThrow(() -> new IllegalArgumentException("보내는 유저 없음"));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 채팅방입니다."));
+
+        User sender = userRepository.findByUserId(senderId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
 
         ChatMessage message = ChatMessage.builder()
                 .chatRoom(chatRoom)
@@ -39,8 +38,6 @@ public class ChatMessageService {
     }
 
     public List<ChatMessage> getMessages(Long roomId) {
-        ChatRoom chatRoom = chatRoomRepository.findById(roomId)
-                .orElseThrow(() -> new IllegalArgumentException("채팅방 없음"));
-        return chatMessageRepository.findByChatRoomOrderBySentAtAsc(chatRoom);
+        return chatMessageRepository.findByChatRoom_Id(roomId);
     }
 }
