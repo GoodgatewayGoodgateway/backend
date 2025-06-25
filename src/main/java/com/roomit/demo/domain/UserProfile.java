@@ -1,5 +1,6 @@
 package com.roomit.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,9 +22,10 @@ public class UserProfile {
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
-    private String name;
 
+    private String name;
     private Integer age;
     private String gender;
     private String location;
@@ -31,10 +33,8 @@ public class UserProfile {
     private String introduction;
     private String idealRoommate;
     private String mbti;
-
     private LocalTime wakeUpTime;
     private LocalTime sleepTime;
-
     private String dayNightType;
     private String cleanLevel;
     private String noise;

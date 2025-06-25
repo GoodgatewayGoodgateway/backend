@@ -5,6 +5,7 @@ import com.roomit.demo.domain.chat.ChatRoom;
 import com.roomit.demo.dto.chat.SendMessageRequest;
 import com.roomit.demo.service.chat.ChatMessageDto;
 import com.roomit.demo.service.chat.ChatMessageService;
+import com.roomit.demo.service.chat.ChatRoomDto;
 import com.roomit.demo.service.chat.ChatRoomService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,9 +26,11 @@ public class ChatController {
 
     @Operation(summary = "채팅방 생성", description = "자신의 userId와 대화할 상대 userId를 받아 채팅방을 생성합니다.\n쿼리 파라미터로 userId와 targetUserId를 전달하세요.")
     @PostMapping("/room")
-    public ChatRoom createRoom(@RequestParam String userId, @RequestParam String targetUserId) {
-        return chatRoomService.createRoom(userId, targetUserId);
+    public ChatRoomDto createRoom(@RequestParam String userId, @RequestParam String targetUserId) {
+        return ChatRoomDto.from(chatRoomService.createRoom(userId, targetUserId));
     }
+
+
 
     @Operation(summary = "내 채팅방 목록 조회", description = "특정 유저(userId)가 속한 모든 채팅방 목록을 반환합니다.")
     @GetMapping("/rooms")

@@ -22,17 +22,19 @@ public class ChatRoomService {
 
     @Transactional
     public ChatRoom createRoom(String userId1, String userId2) {
-        User user1 = userRepository.findByUserId(userId1)
-                .orElseThrow(() -> new IllegalArgumentException("유저1 없음"));
-        User user2 = userRepository.findByUserId(userId2)
-                .orElseThrow(() -> new IllegalArgumentException("유저2 없음"));
+        // 기존 채팅방 존재 여부 확인
+        return chatRoomRepository.findChatRoomByUsers(userId1, userId2)
+                .orElseGet(() -> {
+                    User user1 = userRepository.findByUserId(userId1)
+                            .orElseThrow(() -> new IllegalArgumentException("유저1 없음"));
+                    User user2 = userRepository.findByUserId(userId2)
+                            .orElseThrow(() -> new IllegalArgumentException("유저2 없음"));
 
-        ChatRoom room = chatRoomRepository.save(new ChatRoom());
-
-        chatRoomMemberRepository.save(new ChatRoomMember(room, user1));
-        chatRoomMemberRepository.save(new ChatRoomMember(room, user2));
-
-        return room;
+                    ChatRoom room = chatRoomRepository.save(new ChatRoom());
+                    chatRoomMemberRepository.save(new ChatRoomMember(room, user1));
+                    chatRoomMemberRepository.save(new ChatRoomMember(room, user2));
+                    return room;
+                });
     }
 
     public List<ChatRoom> getRoomsByUser(String userId) {
