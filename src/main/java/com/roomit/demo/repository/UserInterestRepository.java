@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface UserInterestRepository extends JpaRepository<UserInterest, Long> {
     List<UserInterest> findByProfile(UserProfile profile);
+    void deleteAllByProfile(UserProfile profile); // 기존 관심사 삭제용
 }

@@ -39,8 +39,15 @@ public class UserProfileService {
         profile.setIntroduction(request.getIntroduction());
         profile.setIdealRoommate(request.getIdealRoommate());
         profile.setMbti(request.getMbti());
-        profile.setWakeUpTime(LocalTime.parse(request.getWakeUpTime())); // ⚠️ String → LocalTime
-        profile.setSleepTime(LocalTime.parse(request.getSleepTime()));   // ⚠️ String → LocalTime
+
+        if (request.getWakeUpTime() != null && !request.getWakeUpTime().isBlank()) {
+            profile.setWakeUpTime(LocalTime.parse(request.getWakeUpTime()));
+        }
+
+        if (request.getSleepTime() != null && !request.getSleepTime().isBlank()) {
+            profile.setSleepTime(LocalTime.parse(request.getSleepTime()));
+        }
+
         profile.setDayNightType(request.getDayNightType());
         profile.setCleanLevel(request.getCleanLevel());
         profile.setNoise(request.getNoise());
@@ -59,13 +66,19 @@ public class UserProfileService {
         UserProfile profile = user.getProfile();
         if (profile == null) throw new IllegalStateException("프로필 먼저 등록 필요");
 
-        request.getInterests().forEach(name -> {
-            UserInterest interest = UserInterest.builder()
-                    .profile(profile)
-                    .name(name)
-                    .build();
-            userInterestRepository.save(interest);
-        });
+        // 기존 관심사 전부 삭제
+        userInterestRepository.deleteAllByProfile(profile);
+
+        // 중복 제거 후 새로 저장
+        request.getInterests().stream()
+                .distinct()
+                .forEach(name -> {
+                    UserInterest interest = UserInterest.builder()
+                            .profile(profile)
+                            .name(name)
+                            .build();
+                    userInterestRepository.save(interest);
+                });
     }
 
     @Transactional
