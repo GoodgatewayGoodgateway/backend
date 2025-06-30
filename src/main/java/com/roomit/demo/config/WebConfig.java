@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class WebConfig {
 
-    private final JwtFilter jwtFilter; // ✅ JwtFilter 주입
+    private final JwtFilter jwtFilter;
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
@@ -33,9 +33,9 @@ public class WebConfig {
     @Bean
     public FilterRegistrationBean<Filter> jwtFilterRegistration() {
         FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<>();
-        registration.setFilter(jwtFilter); // 필터 등록
+        registration.setFilter(jwtFilter);
         registration.addUrlPatterns("/api/secure/*"); // secure 경로에만 적용
-        registration.setOrder(1); // 필터 우선순위
+        registration.setOrder(1);
         return registration;
     }
 }

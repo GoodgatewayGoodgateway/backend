@@ -26,7 +26,7 @@ public class JwtFilter extends OncePerRequestFilter {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
             try {
-                String userId = jwtUtil.validateAndGetUserId(token); 
+                String userId = jwtUtil.validateAndGetUserId(token);
                 request.setAttribute("userId", userId);
             } catch (IllegalArgumentException e) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
