@@ -47,14 +47,3 @@ springdoc:
       name: RooMIT 개발팀
       email: roomit.team@example.com
 
-cloud:
-  aws:
-    s3:
-      bucket:
-    stack:
-      auto: false
-    region:
-      static: ap-northeast-2
-    credentials:
-      access-key: IAM계정
-      secret-key: IAM비번
