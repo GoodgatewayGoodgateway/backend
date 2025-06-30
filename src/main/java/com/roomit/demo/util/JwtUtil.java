@@ -10,15 +10,15 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24; // 24시간
-    private final Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256); // 안전한 256비트 키
+    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24;
+    private final Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     public String createToken(String userId) {
         return Jwts.builder()
                 .setSubject(userId)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(secretKey) // 안전한 키 사용
+                .signWith(secretKey)
                 .compact();
     }
 
