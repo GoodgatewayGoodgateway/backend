@@ -8,6 +8,6 @@ import java.util.List;
 @Getter
 @Setter
 public class AddInterestsRequest {
-    private String userId; // JWT에서 설정됨
+    private String userId;
     private List<String> interests;
 }
