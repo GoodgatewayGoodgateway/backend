@@ -1,14 +1,13 @@
 spring:
   datasource:
-    url: jdbc:mysql://34.64.54.118:3306/capstone?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: root
-    password: 1234
-
+    url: jdbc:mysql://3.39.228.236:3306/capstone?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: roomit
+    password: roomit2025!
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none  # 이미 capstone DB에 테이블 다 있으므로 none 또는 validate가 안전
     show-sql: true
     properties:
       hibernate:
@@ -46,4 +45,3 @@ springdoc:
     contact:
       name: RooMIT 개발팀
       email: roomit.team@example.com
-
