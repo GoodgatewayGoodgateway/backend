@@ -17,9 +17,9 @@ public class UserInterest {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "profile_id", nullable = false)
-    private UserProfile profile;
+    @JoinColumn(name = "user_id", nullable = false) // DB 컬럼명에 맞춤
+    private User user;
 
-    @Column(nullable = false, length = 50)
+    @Column(name = "interest", nullable = false, length = 100) // DB 컬럼 매핑
     private String name;
 }

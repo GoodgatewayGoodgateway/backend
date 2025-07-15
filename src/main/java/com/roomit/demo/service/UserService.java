@@ -65,8 +65,9 @@ public class UserService {
 
     private UserFullInfoResponse buildFullInfo(User user) {
         UserProfile profile = userProfileRepository.findByUser(user).orElse(null);
-        List<UserInterest> interests = profile == null ? List.of() : userInterestRepository.findByProfile(profile);
+        List<UserInterest> interests = userInterestRepository.findByUser(user);
         List<UserSelectedOption> selectedOptions = profile == null ? List.of() : userSelectedOptionRepository.findByProfile(profile);
+
 
         return UserFullInfoResponse.builder()
                 .userId(user.getUserId())
@@ -91,7 +92,13 @@ public class UserService {
                                 .avatar(nullToInfo(profile.getAvatar()))
                                 .build())
                 .interests(interests.stream().map(i -> nullToInfo(i.getName())).toList())
-                .selectedOptions(selectedOptions.stream().map(s -> nullToInfo(s.getOptionValue().getLabel())).toList())
+                .selectedOptions(
+                        selectedOptions.stream()
+                                .map(s -> {
+                                    OptionValue opt = s.getOptionValue();
+                                    return nullToInfo(opt == null ? null : opt.getLabel());
+                                })
+                                .toList())
                 .build();
     }
 

@@ -67,14 +67,14 @@ public class UserProfileService {
         if (profile == null) throw new IllegalStateException("프로필 먼저 등록 필요");
 
         // 기존 관심사 전부 삭제
-        userInterestRepository.deleteAllByProfile(profile);
+        userInterestRepository.deleteAllByUser(user);
 
         // 중복 제거 후 새로 저장
         request.getInterests().stream()
                 .distinct()
                 .forEach(name -> {
                     UserInterest interest = UserInterest.builder()
-                            .profile(profile)
+                            .user(user)
                             .name(name)
                             .build();
                     userInterestRepository.save(interest);
