@@ -23,12 +23,24 @@ import lombok.Setter;
   "drinking": "가끔",
   "avatar": "https://example.com/profile.jpg",
   "wakeUpTime": "07:30:00",
-  "sleepTime": "23:30:00"
+  "sleepTime": "23:30:00",
+  "tidyLevel": "보통",
+  "cleanFreq": "주 2-3회",
+  "commonAreaMgmt": "가끔 정리",
+  "mealTime": "19:00:00",
+  "kitchenUsage": "매일",
+  "cookingFreq": "매일",
+  "soundSensitivity": "둔감",
+  "musicTvPref": "중간 볼륨",
+  "petAllowed": false,
+  "preferredPet": "고양이",
+  "petAllergy": true
 }
 """)
 public class AddUserProfileRequest {
     private String userId;
 
+    // ==== user_profiles ====
     private String name;
     private Integer age;
     private String gender;
@@ -49,4 +61,23 @@ public class AddUserProfileRequest {
 
     @Schema(type = "string", format = "time", example = "23:30:00")
     private String sleepTime;
+
+    // ==== preference_clean ====
+    private String tidyLevel;
+    private String cleanFreq;
+    private String commonAreaMgmt;
+
+    // ==== preference_meal ====
+    private String mealTime;       // "HH:mm:ss"
+    private String kitchenUsage;
+    private String cookingFreq;
+
+    // ==== preference_noise ====
+    private String soundSensitivity;
+    private String musicTvPref;
+
+    // ==== preference_pet ====
+    private Boolean petAllowed;
+    private String preferredPet;
+    private Boolean petAllergy;
 }
